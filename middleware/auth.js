@@ -9,7 +9,10 @@ async function getRoute(url) {
 
 export default async function ({ store, redirect, route, error }) {
   if (store.state.authUser) if (route.name === 'login' || route.path ===  '/') return redirect('/redirect')
+
   let RouteInfo = await getRoute(`http://poppin.party/api/route${route.path}`)
+
   if (RouteInfo) return redirect(RouteInfo)
   else if (!store.state.authUser) return redirect('/login')
+  else return redirect('/redirect')
 }
